@@ -600,7 +600,7 @@ on property:netd.fstman.start=true
 on property:netd.fstman.start=false
     stop fstman
 
-service cnss_diag /system/vendor/bin/cnss_diag -q -f
+service cnss_diag /system/vendor/bin/cnss_diag -q
     class main
     user system
     group system wifi inet net_admin sdcard_rw media_rw diag
@@ -703,3 +703,10 @@ service time_daemon /system/vendor/bin/time_daemon
     class main
     user root
     group root
+
+# FM enable/disable triggers
+on property:hw.fm.init=1
+    write /sys/module/radio_iris_transport/parameters/fmsmd_set 1
+
+on property:hw.fm.init=0
+    write /sys/module/radio_iris_transport/parameters/fmsmd_set 0
